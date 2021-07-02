@@ -1,0 +1,33 @@
+*{
+    margin:0;
+    padding: 0;
+}
+
+header{
+    background-color: #0c5460;
+    height: 100px;
+}
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    background-color: darkred;
+}
+article {
+    /* Flex = rempli toujours l'espace. Le parent doit absolument être en D:flex et en FW:wrap /
+    flex: 1 0 25%;
+    / La largeur minimale que doivent avoir les cases */
+    min-width: 250px;
+    min-height: 250px;
+    margin: 6px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 40px;
+    background-color: #7eea12;
+}
+footer{
+    background-color: #1b9448;
+    height: 100px;
+}
