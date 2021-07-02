@@ -1,44 +1,43 @@
 <?php
 
-namespace App\Controller;
 
+namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use  Symfony\Component\Routing\Annotation\Route;
+
 class pokercontroller extends AbstractController
+
 {
     /**
      * @Route("/poker", name="poker")
      */
-    public function poker()
+    public function poker(Request $request)
     {
-
-        // j'utilise la classe Request du composant HTTPFoundation
-        // et la méthode createFromGlobals qui met permet de récupérer
-        // tous les parametre GET / POST etc
-        $request = Request::createFromGlobals();
-
-        // je stocke dans une variable $request la valeur
-        // du parametre GET 'sent'
         $age = $request->query->get('age');
 
-        // si le parametre GET 'sent' est égal à 'yes' alors j'envoie
-        // une réponse avec 'merci pour le form'
         if ($age >= 18) {
             return new Response("Bienvenue");
             // sinon je renvoie le formulaire en réponse
         } else {
-            return $this->redirectToRoute('Gros Noob');
+            // je fais une redirection vers la route redirect
+            // grâce à la méthode redirectToRoute qui existe dans
+            // l'AbstractController
+            // Ma classe PageController hérite d'AbstractController
+            // donc elle hérite aussi de la méthode redirectToRoute
+            return $this->redirectToRoute("noob");
         }
     }
 
+
     /**
-     * @Route("/Gros Noob", name="Gros Noob")
+     * @Route("/Noob", name="noob")
      */
-    public function Noob()
+    public function noob()
     {
-        return new Response("Va a la maternelle");
+        //return new Response("Gros Noob");
+        return $this->render('index.html');
     }
 }
