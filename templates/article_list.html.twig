@@ -15,9 +15,10 @@
     {% for article in articles %}
         <article>
 
-            <!-- placer la variable-->
-
+            <!-- ArticleShow pour pouvoir cliquer sur les articles -->
+            <a href="{{ path ('articleShow', {'id': article.id}) }}">
             <h2>{{ article.title }}</h2>
+            </a>
             <p>{{ article.content }}</p>
         </article>
     {% endfor %}

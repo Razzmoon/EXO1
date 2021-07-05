@@ -16,7 +16,7 @@ main {
 }
 article {
     width: 500px;
-    height: 500px;
+    height: 250px;
     margin: 6px;
     padding: 10px;
     border: 1px solid black;
