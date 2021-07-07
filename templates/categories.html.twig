@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block metaTitle %}
+    Catégories
+{% endblock %}
+{% block header %}
+    <h1>Catégories</h1>
+    <img src="{{ asset('img/ah_template.png') }}" id="img" alt="Symfony" />
+{% endblock %}
+{% block main %}
+    <main>
+        <h2>Il y a {{categories | length }} catégories dans la BD</h2>
+        <div class="articles-container">
+            {% for categories in categories %}
+                <article class="article">
+            <a href="{{ path ('categories', {'id': categories.id}) }}">
+                    <h1>{{ categories.title }}</h1>
+                    <p>{{ categories.content }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock%}
+
+{% block foot %}
+    <footer>
+        <div class="foot">
+        </div>
+    </footer>
+{% endblock%}
