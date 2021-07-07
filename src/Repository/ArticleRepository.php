@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Catégories;
+use App\Entity\Article;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Catégories|null find($id, $lockMode = null, $lockVersion = null)
- * @method Catégories|null findOneBy(array $criteria, array $orderBy = null)
- * @method Catégories[]    findAll()
- * @method Catégories[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Article|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Article|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Article[]    findAll()
+ * @method Article[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CatégoriesRepository extends ServiceEntityRepository
+class ArticleRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Catégories::class);
+        parent::__construct($registry, Article::class);
     }
 
     // /**
-    //  * @return Catégories[] Returns an array of Catégories objects
+    //  * @return Article[] Returns an array of Article objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class CatégoriesRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Catégories
+    public function findOneBySomeField($value): ?Article
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
