@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CategoriesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,7 +26,18 @@ class Categories
     /**
      * @ORM\Column(type="datetime")
      */
+
     public $createdAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Article",mappedBy="categorie")
+     */
+    private $articles;
+
+    public function construct()
+    {
+        $this->articles=new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -43,4 +55,13 @@ class Categories
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getArticles()
+    {
+        return $this->articles;
+    }
+
 }

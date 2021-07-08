@@ -3,5 +3,9 @@
     <body>
     <h1>{{ categories.title }}</h1>
     <p>{{ categories.createdAt | date('y-m-d') }}</p>
+    {% for article in categories.articles %}
+    <p>{{ article.title }}</p>
+    {% endfor %}
+
     </body>
 {% endblock main %}

@@ -1,58 +1,42 @@
-*{
-    margin:0;
-    padding: 0;
+* {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-    background-color: deepskyblue;
-    height: 100px;
+    height: 50px;
+    width: 100%;
+    background: rgb(0,217,255);
+    background: linear-gradient(90deg, rgba(0,217,255,1) 0%, rgba(181,0,255,1) 50%, rgba(255,73,73,1) 100%);
 }
-main{
-    background: rgb(238,174,202);
-    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+
+footer {
+    height: 50px;
+    width: 100%;
+    background: rgb(0,217,255);
+    background: linear-gradient(90deg, rgba(0,217,255,1) 0%, rgba(181,0,255,1) 50%, rgba(255,73,73,1) 100%);
 }
-h1{
-    text-align: center;
-}
-h2{
-    text-align: center;
-    padding: 20px;
-    color: black;
-}
+
+
+
 .articles-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-
-
 }
-a{
-    text-decoration: none;
-}
+
 .article {
-    width: 40%;
-    height: 250px;
-    border: 1px solid black;
-    border-radius: 40px;
-    padding: 10px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    background: rgb(211,238,174);
-    background: radial-gradient(circle, rgba(211,238,174,1) 0%, rgba(148,187,233,1) 100%);
-    -webkit-box-shadow: 0px 5px 50px 5px #000000;
-    box-shadow: 0px 5px 50px 5px #000000;
-
-}
-footer{
-    background-color: palevioletred;
-    height: 100px;
+    width: 50%;
+    border: 5px solid black;
+    height: 42vh;
     color: white;
 }
-.foot{
-    text-align: center;
-    font-size:3em;
+
+body{
+    background: rgb(63,94,251);
+    background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
 }
+
 .tag-container {
     display: flex;
     flex-wrap: wrap;

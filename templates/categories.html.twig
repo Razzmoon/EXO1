@@ -8,11 +8,11 @@
 
 {% block main %}
     <h1>Il y a {{ categories | length }} categories dans la base de données</h1>
-    <div class="articles-container-container">
+    <div class="articles-container">
         {% for categorie in categories %}
             <article class="article">
-                <h2>{{ categories.title | upper }}</h2>
-                <a href="{{ path('categoriesShow', {'id': categories.id }) }}">Voir plus</a>
+                <h2>{{ categorie.title | upper }}</h2>
+                <a href="{{ path('categorieShow', {'id': categorie.id }) }}">Voir plus</a>
             </article>
         {% endfor %}
     </div>

@@ -39,7 +39,7 @@ class Article
     private $isPublished;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categories")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categories", inversedBy="articles")
      */
     private $categorie;
 
