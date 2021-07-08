@@ -37,6 +37,12 @@ class Article
      */
     private $isPublished;
 
+    /*
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categories")
+     */
+    private $categories;
+
+
     public function getIsPublished(): ?bool
     {
         return $this->isPublished;
@@ -104,6 +110,23 @@ class Article
     {
         $this->createdAt = $createdAt;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param mixed $categories
+     */
+    public function setCategories($categories): void
+    {
+        $this->categories = $categories;
+    }
+
 
 
 

@@ -25,7 +25,7 @@ class Categories
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    public $createdAt;
 
     public function getId(): ?int
     {

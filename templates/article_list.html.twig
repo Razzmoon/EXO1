@@ -1,33 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block metaTitle %}
-Articles
-{% endblock %}
-{% block header %}
-<h1>Articles</h1>
-{% endblock %}
+    Liste des articles
+{% endblock metaTitle %}
+
 
 {% block main %}
-<main>
-    <h2>Il y a {{articles | length }} articles dans la BD</h2>
+    <h1>Il y a {{ articles | length }} articles dans la base de données</h1>
     <div class="articles-container">
-    {% for article in articles %}
-        <article class="article">
-            <!-- ArticleShow pour pouvoir cliquer sur les articles -->
-            <a href="{{ path ('articleShow', {'id': article.id}) }}">
-            <h2>{{ article.title }}</h2>
-            </a>
-            <p>{{ article.content }}</p>
-        </article>
-    {% endfor %}
+        {% for article in articles %}
+            {% if article.isPublished %}
+                <article class="article">
+                    <h2>{{ article.title | upper }}</h2>
+                    <p>{{ article.content }}</p>
+                    <a href="{{ path('articleShow', {'id': article.id }) }}">Voir plus</a>
+                </article>
+            {% endif %}
+        {% endfor %}
     </div>
-</main>
-{% endblock%}
-
-{% block foot %}
-<footer>
-    <div class="foot">
-    yo les naze
-    </div>
-</footer>
-{% endblock%}
+{% endblock main %}
