@@ -6,7 +6,7 @@
         <h1>{{ article.title }}</h1>
         <div>{{ article.content }}</div>
         <p>{{ article.createdAt | date('y-m-d') }}</p>
-        <p>{{ article.categorie }}</p>
+        <p>{{ article.categorie.title }}</p>
     </article>
 
 {% endblock main %}
