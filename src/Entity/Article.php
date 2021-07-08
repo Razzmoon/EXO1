@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -37,10 +38,10 @@ class Article
      */
     private $isPublished;
 
-    /*
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categories")
      */
-    private $categories;
+    private $categorie;
 
 
     public function getIsPublished(): ?bool
@@ -114,17 +115,17 @@ class Article
     /**
      * @return mixed
      */
-    public function getCategories()
+    public function getCategorie()
     {
-        return $this->categories;
+        return $this->categorie;
     }
 
     /**
-     * @param mixed $categories
+     * @param mixed $categorie
      */
-    public function setCategories($categories): void
+    public function setCategorie($categorie): void
     {
-        $this->categories = $categories;
+        $this->categorie = $categorie;
     }
 
 
