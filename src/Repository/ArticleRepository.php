@@ -22,10 +22,10 @@ class ArticleRepository extends ServiceEntityRepository
     // fonction qui recupere la variable term pour fair une recherche
     public function searchByTerm($term)
     {
-        //SA J'ai pas compris
+        //objet qui permet de crée des requete SQL pour une table donné
         $queryBuilder = $this->createQueryBuilder('article');
 
-        //une sorte de requete sql mais differente qui permet d'aller dans article et de chercher ce qu'on veux en fonction de term
+        // requete sql mais en language PHP qui permet d'aller dans article et de chercher ce qu'on veux en fonction de term
         $query = $queryBuilder
             ->select('article')
 

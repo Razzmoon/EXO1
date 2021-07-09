@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,21 +40,20 @@ class ArticleController extends AbstractController
             'article' => $article
         ]);
     }
+
     /**
      * @Route("/search", name="search")
      */
-
-
-    //crée la fonction qui permet de fair une recherche
-    public function search(ArticleRepository $articleRepository)
+    //crée la fonction qui permet de fair une recherche sur une page
+    public function search(ArticleRepository $articleRepository , Request $request)
     {
         //$term et le mot rechercher
-        $term = 'zion';
+        $term = $request->query->get('q');
 
         //methode qui permet d'aller chercher dans article repository le term rechercher
         $articles = $articleRepository->searchByTerm($term);
 
-        //afficher la recherche dans article_search
+        //afficher la recherche dans article_search et les articles rechercher
         return $this->render('article_search.html.twig', [
             'articles' => $articles,
             'term' => $term
