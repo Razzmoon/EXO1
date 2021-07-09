@@ -39,7 +39,26 @@ class ArticleController extends AbstractController
             'article' => $article
         ]);
     }
+    /**
+     * @Route("/search", name="search")
+     */
 
+
+    //crée la fonction qui permet de fair une recherche
+    public function search(ArticleRepository $articleRepository)
+    {
+        //$term et le mot rechercher
+        $term = 'zion';
+
+        //methode qui permet d'aller chercher dans article repository le term rechercher
+        $articles = $articleRepository->searchByTerm($term);
+
+        //afficher la recherche dans article_search
+        return $this->render('article_search.html.twig', [
+            'articles' => $articles,
+            'term' => $term
+        ]);
+    }
 
 }
 

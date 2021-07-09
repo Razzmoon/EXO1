@@ -19,32 +19,23 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    // fonction qui recupere la variable term pour fair une recherche
+    public function searchByTerm($term)
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        //SA J'ai pas compris
+        $queryBuilder = $this->createQueryBuilder('article');
 
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        //une sorte de requete sql mais differente qui permet d'aller dans article et de chercher ce qu'on veux en fonction de term
+        $query = $queryBuilder
+            ->select('article')
+
+            ->where('article.content LIKE :term')
+            ->setParameter('term', '%'.$term.'%')
+
+            //transforme la sorte de requette sql en vrai requette sql
+            ->getQuery();
+
+        return $query->getResult();
     }
-    */
+
 }
