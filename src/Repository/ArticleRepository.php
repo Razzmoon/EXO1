@@ -38,4 +38,28 @@ class ArticleRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+
+    //fonction pour rechercher par rapport a la catégorie//tag//article
+    public function search($term)
+    {
+        //commande sql en php
+        $queryBuilder = $this->createQueryBuilder('article');
+
+        $query = $queryBuilder
+            ->select('article')
+
+            ->leftJoin('article.categorie', 'categorie')
+            ->leftJoin('article.tag', 'tag')
+
+            ->where('article.content LIKE :term')
+            ->orWhere('article.title LIKE :term')
+            ->orWhere('categorie.title LIKE :term')
+            ->orWhere('tag.title LIKE :term')
+
+            ->setParameter('term', '%'.$term.'%')
+            ->getQuery();
+        //transforme la requete sql php en requete sql
+        return $query->getResult();
+    }
+
 }

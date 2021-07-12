@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=CategoriesRepository::class)
+ * @ORM\Entity(repositoryClass=CategoryRepository::class)
  */
 class Categories
 {
@@ -26,17 +26,16 @@ class Categories
     /**
      * @ORM\Column(type="datetime")
      */
-
-    public $createdAt;
+    private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article",mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie")
      */
     private $articles;
 
-    public function construct()
+    public function __construct()
     {
-        $this->articles=new ArrayCollection();
+        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -59,9 +58,28 @@ class Categories
     /**
      * @return mixed
      */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param mixed $createdAt
+     */
+    public function setCreatedAt($createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getArticles()
     {
         return $this->articles;
     }
 
+
+
 }
+

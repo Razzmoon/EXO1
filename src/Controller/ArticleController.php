@@ -2,13 +2,85 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
+use App\Entity\Tag;
 use App\Repository\ArticleRepository;
-use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CategoriesRepository;
+use App\Repository\TagRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
+
+
+
+    /**
+     * @Route("/articles/insert", name="articleInsert")
+     */
+    public function insertArticle(
+        EntityManagerInterface $entityManager,
+        CategoriesRepository $categoryRepository,
+        TagRepository $tagRepository
+    )
+    {
+        // J'utilise l'entité Article, pour créer un nouvel article en bdd
+        // une instance de l'entité Article = un enregistrement d'article en bdd
+        $article = new Article();
+
+        // j'utilise les setters de l'entité Article pour renseigner les valeurs
+        // des colonnes
+        $article->setTitle('Titre article depuis le controleur');
+        $article->setContent('blablalbla');
+        $article->setIsPublished(true);
+        $article->setCreatedAt(new \DateTime('NOW'));
+
+        // je récupère la catégorie dont l'id est 1 en bdd
+        // doctrine me créé une instance de l'entité category avec les infos de la catégorie de la bdd
+        $category = $categoryRepository->find(1);
+        // j'associé l'instance de l'entité categorie récupérée, à l'instane de l'entité article que je suis
+        // en train de créer
+        $article->setCategorie($category);
+
+        $tag = $tagRepository->findOneBy(['title' => 'info']);
+
+        if (is_null($tag)) {
+            $tag = new Tag();
+            $tag->setTitle("info");
+            $tag->setColor("blue");
+        }
+
+        $entityManager->persist($tag);
+
+        $article->setTag($tag);
+
+        // je prends toutes les entités créées (ici une seule) et je les "pré-sauvegarde"
+        $entityManager->persist($article);
+
+        // je récupère toutes les entités pré-sauvegardées et je les insère en BDD
+        $entityManager->flush();
+
+        dump('ok'); die;
+    }
+
+    /**
+     * @Route("/articles/update/{id}", name="articleUpdate")
+     */
+    public function updateArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
+    {
+        $article = $articleRepository->find($id);
+
+        $article->setTitle("titre update");
+
+        $entityManager->persist($article);
+        $entityManager->flush();
+
+        return new  Response('ok');
+    }
 
     /**
      * @Route("/articles", name="articleList")
@@ -36,6 +108,12 @@ class ArticleController extends AbstractController
         // afficher un article en fonction de l'id renseigné dans l'url (en wildcard)
         $article = $articleRepository->find($id);
 
+        // si l'article n'a pas été trouvé, je renvoie une exception (erreur)
+        // pour afficher une 404
+        if (is_null($article)) {
+            throw new NotFoundHttpException();
+        }
+
         return $this->render('article_show.html.twig', [
             'article' => $article
         ]);
@@ -44,21 +122,18 @@ class ArticleController extends AbstractController
     /**
      * @Route("/search", name="search")
      */
-    //crée la fonction qui permet de fair une recherche sur une page
-    public function search(ArticleRepository $articleRepository , Request $request)
+    public function search(ArticleRepository $articleRepository, Request $request)
     {
-        //$term et le mot rechercher
         $term = $request->query->get('q');
 
-        //methode qui permet d'aller chercher dans article repository le term rechercher
-        $articles = $articleRepository->searchByTerm($term);
+        $articles = $articleRepository->search($term);
 
-        //afficher la recherche dans article_search et les articles rechercher
         return $this->render('article_search.html.twig', [
             'articles' => $articles,
             'term' => $term
         ]);
     }
+
 
 }
 
