@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/admin_base.html.twig' %}
 
 {% block metaTitle %}
     Liste des articles
@@ -13,9 +13,12 @@
                 <article class="article">
                     <h2>{{ article.title | upper }}</h2>
                     <p>{{ article.content }}</p>
-                    <a href="{{ path('articleShow', {'id': article.id }) }}">Voir plus</a>
+                    <a href="{{ path('admin_article_Delete', {'id': article.id }) }}">Supprimer</a>
+                    <a href="{{ path('admin_article_Update', {'id': article.id }) }}">Mettre à jour (hardcodé)</a>
                 </article>
             {% endif %}
         {% endfor %}
+
+        <a href="{{ path('admin_article_Insert') }}">Ajouter un article (hardcodé)</a>
     </div>
 {% endblock main %}

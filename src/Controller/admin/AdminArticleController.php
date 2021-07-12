@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\admin;
 
 use App\Entity\Article;
 use App\Entity\Tag;
@@ -14,10 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ArticleController extends AbstractController
+class AdminArticleController extends AbstractController
 {
     /**
-     * @Route("/articles", name="articleList")
+     * @Route("/admin/articles", name="admin_article_List")
      */
     public function articleList(ArticleRepository $articleRepository)
     {
@@ -29,32 +29,13 @@ class ArticleController extends AbstractController
         // suivi de la variable dans laquelle je veux que sf m'instancie la classe
         $articles = $articleRepository->findAll();
 
-        return $this->render('article_list.html.twig', [
+        return $this->render('Admin/admin_article_list.html.twig', [
             'articles' => $articles
         ]);
     }
 
     /**
-     * @Route("/articles/{id}", name="articleShow")
-     */
-    public function articleShow($id, ArticleRepository $articleRepository)
-    {
-        // afficher un article en fonction de l'id renseigné dans l'url (en wildcard)
-        $article = $articleRepository->find($id);
-
-        // si l'article n'a pas été trouvé, je renvoie une exception (erreur)
-        // pour afficher une 404
-        if (is_null($article)) {
-            throw new NotFoundHttpException();
-        }
-
-        return $this->render('article_show.html.twig', [
-            'article' => $article
-        ]);
-    }
-
-    /**
-     * @Route("/search", name="search")
+     * @Route("admin/search", name="admin_search")
      */
     public function search(ArticleRepository $articleRepository, Request $request)
     {
@@ -69,7 +50,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @Route("/article/insert", name="articleInsert")
+     * @Route("/article/insert", name="admin_article_Insert")
      */
     public function insertArticle(
         EntityManagerInterface $entityManager,
@@ -113,11 +94,11 @@ class ArticleController extends AbstractController
         // je récupère toutes les entités pré-sauvegardées et je les insère en BDD
         $entityManager->flush();
 
-        dump('ok'); die;
+        return $this->redirectToRoute('admin_article_List');
     }
 
     /**
-     * @Route("/articles/update/{id}", name="articleUpdate")
+     * @Route("/articles/update/{id}", name="admin_article_Update")
      */
     public function updateArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
     {
@@ -128,21 +109,21 @@ class ArticleController extends AbstractController
         $entityManager->persist($article);
         $entityManager->flush();
 
-        return new  Response('ok');
+        return $this->redirectToRoute('admin_article_List');
     }
 
     /**
-     * @Route("/article/delete/{id}",name="articleDelete")
+     * @Route("/article/delete/{id}",name="admin_article_Delete")
      */
     public function deleteArticle($id,ArticleRepository $articleRepository,EntityManagerInterface $entityManager)
     {
      $article= $articleRepository->find($id);
      $entityManager->remove($article);
-
+    //prend tous et direction la bdd
      $entityManager->flush();
 
      //redirige vers la page article_list
-     return $this->redirectToRoute('articleList');
+     return $this->redirectToRoute('admin_article_List');
     }
 
 
