@@ -1,0 +1,17 @@
+{% extends 'admin/admin_base.html.twig' %}
+
+{% block main %}
+
+    <div class="tag-container">
+        {% for tag in tags %}
+            <article class="tag">
+                <p style="background-color: {{ tag.color }}">{{ tag.title }}</p>
+            </article>
+            <a href="{{ path('admin_tag_Delete', {'id': tag.id }) }}">Supprimer</a>
+            <a href="{{ path('admin_tag_Update', {'id': tag.id }) }}">Mettre à jour (hardcodé)</a>
+        {% endfor %}
+        <a href="{{ path('admin_tag_Insert') }}">Ajouter un tag (hardcodé)</a>
+
+    </div>
+
+{% endblock %}

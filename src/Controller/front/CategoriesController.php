@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\front;
 
 use App\Repository\CategoriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +22,7 @@ class CategoriesController extends AbstractController
         // suivi de la variable dans laquelle je veux que sf m'instancie la classe
         $categories = $categoriesRepository->findAll();
 
-        return $this->render('categories.html.twig', [
+        return $this->render('front/categories.html.twig', [
             'categories' => $categories
         ]);
     }
