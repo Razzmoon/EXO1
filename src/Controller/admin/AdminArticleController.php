@@ -53,29 +53,57 @@ class AdminArticleController extends AbstractController
     /**
      * @Route("/admin/articles/insert", name="admin_article_insert")
      */
-    public function insertArticle()
+    public function insertArticle(Request $request, EntityManagerInterface $entityManager)
     {
         $article = new Article();
 
+        //On genere le formulaire en utilisant le gabarit + une instance de l'entité article
         $articleForm = $this->createForm(ArticleType::class, $article);
+
+        //on lie le formulaire au donné de POST (donné envoyer par post)
+        $articleForm->handleRequest($request);
+
+        //si le form a été poster et qu'il et valide (que tous les champ obligatoire son bien rempli)
+        //alors on enregistre l'article en bdd=
+        if ($articleForm->isSubmitted()&&$articleForm->isValid()){
+            $entityManager->persist($article);
+            $entityManager->flush();
+        }
 
         return $this->render('Admin/admin_insert.html.twig', [
             'articleForm' => $articleForm->createView()
+
+
         ]);
     }
     /**
      * @Route("/articles/update/{id}", name="admin_article_Update")
      */
-    public function updateArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager)
+    public function updateArticle($id, ArticleRepository $articleRepository, EntityManagerInterface $entityManager, Request $request)
     {
+        // pour l'insert : $article = new Article();
         $article = $articleRepository->find($id);
 
-        $article->setTitle("titre update");
+        // on génère le formulaire en utilisant le gabarit + une instance de l'entité Article
+        $articleForm = $this->createForm(ArticleType::class, $article);
 
-        $entityManager->persist($article);
-        $entityManager->flush();
+        // on lie le formulaire aux données de POST (aux données envoyées en POST)
+        $articleForm->handleRequest($request);
 
-        return $this->redirectToRoute('admin_article_List');
+        // si le formulaire a été posté et qu'il est valide (que tous les champs
+        // obligatoires sont remplis correctement), alors on enregistre l'article
+        // créé en bdd
+        if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_article_List');
+        }
+
+
+        return $this->render('admin/admin_insert.html.twig', [
+            'articleForm' => $articleForm->createView()
+        ]);
     }
 
     /**
