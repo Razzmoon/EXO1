@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Article;
+use App\Entity\Categories;
+use App\Entity\Tag;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -35,6 +38,15 @@ class ArticleType extends AbstractType
                 'data' => true
             ])
             ->add('submit', SubmitType::class)
+
+            ->add('categorie',EntityType::class,[
+                'class'=>Categories::class,
+                'choice_label'=> 'title'
+            ])
+            ->add('tag',EntityType::class,[
+                'class'=>Tag::class,
+                'choice_label'=> 'title'
+            ])
         ;
     }
 
