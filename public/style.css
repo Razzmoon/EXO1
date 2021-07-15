@@ -19,7 +19,15 @@ footer {
     background: linear-gradient(90deg, rgba(0,217,255,1) 0%, rgba(181,0,255,1) 50%, rgba(255,73,73,1) 100%);
 }
 
-
+.form{
+    width: 500px;
+    text-align: center;
+    margin: auto;
+    background-color: black;
+    color: white;
+    padding: 50px 50px;
+    border-radius: 20%;
+}
 
 .articles-container {
     display: flex;
