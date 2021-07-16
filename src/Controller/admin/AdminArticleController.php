@@ -66,8 +66,19 @@ class AdminArticleController extends AbstractController
         //si le form a été poster et qu'il et valide (que tous les champ obligatoire son bien rempli)
         //alors on enregistre l'article en bdd=
         if ($articleForm->isSubmitted()&&$articleForm->isValid()){
+
+            // permet de stocker en session un message flash, dans le but de l'afficher
+            // sur la page suivante
+            $this->addFlash(
+                'success',
+                'L\'article '. $article->getTitle().' a bien été créé !'
+            );
+
             $entityManager->persist($article);
             $entityManager->flush();
+
+            return $this->redirectToRoute('admin_article_List');
+
         }
 
         return $this->render('Admin/admin_insert.html.twig', [
@@ -94,6 +105,7 @@ class AdminArticleController extends AbstractController
         // obligatoires sont remplis correctement), alors on enregistre l'article
         // créé en bdd
         if ($articleForm->isSubmitted() && $articleForm->isValid()) {
+
             $entityManager->persist($article);
             $entityManager->flush();
 

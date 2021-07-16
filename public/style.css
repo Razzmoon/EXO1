@@ -67,3 +67,12 @@ background-image:url("img/chien-rigolo.jpeg");
 .menu-item {
     margin-left: 30px;
 }
+
+.flash-success {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color: white;
+    background-color: lightgreen;
+    font-size: 20px;
+}
