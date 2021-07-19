@@ -10,10 +10,13 @@ use App\Repository\CategoriesRepository;
 use App\Repository\TagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 
 class AdminArticleController extends AbstractController
 {
@@ -53,7 +56,7 @@ class AdminArticleController extends AbstractController
     /**
      * @Route("/admin/articles/insert", name="admin_article_insert")
      */
-    public function insertArticle(Request $request, EntityManagerInterface $entityManager)
+    public function insertArticle(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger)
     {
         $article = new Article();
 
@@ -66,6 +69,29 @@ class AdminArticleController extends AbstractController
         //si le form a été poster et qu'il et valide (que tous les champ obligatoire son bien rempli)
         //alors on enregistre l'article en bdd=
         if ($articleForm->isSubmitted()&&$articleForm->isValid()){
+            $brochureFile = $articleForm->get('brochure')->getData();
+
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // inclure en toute sécurité le nom du fichier dans l'URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+
+                // Déplacer le fichier dans le répertoire où sont stockées les brochures
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    //gérer l'exception si quelque chose se produit pendant le téléchargement du fichier
+                }
+
+                // met à jour la propriété 'brochureFilename' pour stocker le nom du fichier PDF
+                //  au lieu de son contenu
+                $article->setBrochureFilename($newFilename);
+            }
+
 
             // permet de stocker en session un message flash, dans le but de l'afficher
             // sur la page suivante

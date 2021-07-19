@@ -12,6 +12,25 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Article
 {
+
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $brochureFilename;
+
+    public function getBrochureFilename()
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
+
     /**
      * @ORM\Id()
      * @ORM\Column(type="integer")
