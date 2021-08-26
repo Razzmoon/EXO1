@@ -80,6 +80,16 @@ class AdminCategoriesController extends AbstractController
         //redirige vers la page article_list
         return $this->redirectToRoute('admin_categories');
     }
+
+    public function categoriesAll(CategoriesRepository $categoryRepository)
+    {
+        $categories = $categoryRepository->findAll();
+
+        return $this->render('front/_categories_all.html.twig', [
+            'categories' => $categories
+        ]);
+    }
+
 }
 
 

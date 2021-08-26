@@ -18,7 +18,17 @@
         </form>
         <ul class="menu-items">
             <li class="menu-item"><a href="{{ path('article_List') }}">Articles</a></li>
-            <li class="menu-item"><a href="{{ path('categories') }}">Categories</a></li>
+            {#
+            https://symfony.com/doc/3.4/templating/embedding_controllers.html
+            avec la syntaxe de : https://stackoverflow.com/questions/45396501/how-to-embed-controllers-in-a-template-using-symfony-4-directory-structure
+            #}
+            {{ render(controller('App\\Controller\\CategoriesController::categoriesAll')) }}
+
+            {#            <ul class="menu-items">#}
+            {#                {% for category in categories.getAll() %}#}
+            {#                    <li class="menu-item"><a href="{{ path('categoryShow', {'id': category.id}) }}">{{ category.title }}</a></li>#}
+            {#                {% endfor %}#}
+            {#            </ul>#}
             <li><a href="{{ path('app_login') }}"></a></li>
             <li> <a href="{{ path('app_logout') }}">Logout</a></li>
         </ul>
